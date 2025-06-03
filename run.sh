@@ -1,5 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 cargo b --release
+# $?​ 存储上一条命令（cargo b --release）的 ​退出状态码
+ext=$?
+# 检查编译是否成功，失败则退出。
+if [[ $ext -ne 0 ]]; then
+    exit $ext
+fi
 sudo setcap cap_net_admin=eip target/release/rust-tcp
 target/release/rust-tcp &
 pid=$!
